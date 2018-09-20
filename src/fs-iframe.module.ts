@@ -1,24 +1,31 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { FsIFrameEmitterComponent } from './components/fs-iframe-emitter/fs-iframe-emitter.component';
-import { FsIFrameResizerDirective } from './directives/fs-iframe-resizer/fs-iframe-resizer.directive';
+import { FsIFrameScrollToDirective } from './directives/fs-iframe-scrollto/fs-iframe-scrollto.directive';
+import { FsIFrameDirective } from './directives/fs-iframe/fs-iframe.directive';
+import { FsIFrameEmitterComponent } from './components/fs-iframe/fs-iframe.component';
+import { FsIFrame } from './services/iframe.service';
+
+export * from './services/iframe.service';
 
 @NgModule({
   imports: [
     CommonModule,
   ],
   exports: [
-    FsIFrameEmitterComponent,
-    FsIFrameResizerDirective
+    FsIFrameScrollToDirective,
+    FsIFrameDirective,
+    FsIFrameEmitterComponent
   ],
   entryComponents: [
   ],
   declarations: [
-    FsIFrameEmitterComponent,
-    FsIFrameResizerDirective
+    FsIFrameScrollToDirective,
+    FsIFrameDirective,
+    FsIFrameEmitterComponent
   ],
   providers: [
+    FsIFrame
   ],
 })
 export class FsIFrameModule {
