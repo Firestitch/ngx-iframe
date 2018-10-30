@@ -19,7 +19,8 @@ export class FsIFrameDirective implements OnInit {
 
     if (data.name === 'height') {
 
-      this.renderer.setStyle(this.elementRef.nativeElement, 'height', data.value + 'px');
+        let height = data.value;
+        this.renderer.setStyle(this.elementRef.nativeElement, 'height', height + 'px');
 
     } else if (data.name === 'scrollto') {
       window.document.documentElement.scrollTop = data.value + this.offset;

@@ -11,7 +11,9 @@ export class FirstExampleComponent {
   url;
 
   constructor(private sanitizer: DomSanitizer) {
-    let url = '/emitter';
+    let url = 'http://localhost:8000';
+
+    //url = 'https://bulk.components.firestitch.com';
 
     if (<any>window.location.port !== 80) {
       url = window.location.origin + url;

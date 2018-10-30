@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
 import { Subscription } from 'rxjs/Subscription';
 import { postMessage } from '../functions/post-message';
@@ -12,13 +11,24 @@ export class FsIFrame {
   observeBody(): Subscription {
     return IntervalObservable.create(100)
     .subscribe(() => {
-
-      const height = window.document.documentElement.offsetHeight;
+      const height = window.document.body.offsetHeight;
 
       if (this.height !== height) {
-        postMessage({ name: 'height', value: height });
+        this.updateHeight(height);
         this.height = height;
       }
     });
+  }
+
+  updateCurrentHeight() {
+    this.updateHeight(window.document.body.offsetHeight);
+  }
+
+  updateHeight(value) {
+    this.update('height', value);
+  }
+
+  update(name, value) {
+    postMessage({ name: name, value: value });
   }
 }

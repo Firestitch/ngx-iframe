@@ -3,10 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { FsIFrameScrollToDirective } from './directives/fs-iframe-scrollto/fs-iframe-scrollto.directive';
 import { FsIFrameDirective } from './directives/fs-iframe/fs-iframe.directive';
-import { FsIFrameEmitterComponent } from './components/fs-iframe/fs-iframe.component';
-import { FsIFrame } from './services/iframe.service';
+import { FsIFrame } from './services';
 
-export * from './services/iframe.service';
 
 @NgModule({
   imports: [
@@ -14,24 +12,20 @@ export * from './services/iframe.service';
   ],
   exports: [
     FsIFrameScrollToDirective,
-    FsIFrameDirective,
-    FsIFrameEmitterComponent
+    FsIFrameDirective
   ],
   entryComponents: [
   ],
   declarations: [
     FsIFrameScrollToDirective,
-    FsIFrameDirective,
-    FsIFrameEmitterComponent
-  ],
-  providers: [
-    FsIFrame
+    FsIFrameDirective
   ],
 })
 export class FsIFrameModule {
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule: FsIFrameModule
+      ngModule: FsIFrameModule,
+      providers: [FsIFrame]
     };
   }
 }
