@@ -4,7 +4,7 @@
   "version": "0.1.13",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Firestitch/fs-iframe"
+    "url": "https://github.com/Firestitch/ngx-iframe"
   },
   "author": {
     "name": "Firestitch",
@@ -15,7 +15,7 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Firestitch/fs-iframe/issues"
+    "url": "https://github.com/Firestitch/ngx-iframe/issues"
   },
   "main": "package/index.js",
   "typings": "package/index.d.ts",
