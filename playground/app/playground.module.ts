@@ -1,20 +1,24 @@
-import './../tools/assets/playground.scss';
-
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { AppComponent } from './app/app.component';
 import { RouterModule, Routes } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
-import { FsIFrameModule } from '../src';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AppMaterialModule } from './app/material.module';
+
+import { FsIFrameModule } from '@firestitch/iframe';
 import { FsExampleModule } from '@firestitch/example';
-import { FirstExampleComponent, IFrameEmitterComponent, ExamplesComponent } from './app/components';
+import { FsMessageModule } from '@firestitch/message';
+
+import { ToastrModule } from 'ngx-toastr';
+
+import { AppMaterialModule } from './material.module';
+import { FirstExampleComponent, IFrameEmitterComponent, ExamplesComponent } from './components';
+import { AppComponent } from './app.component';
 
 const routes: Routes = [
   { path: '', component: ExamplesComponent },
   { path: 'emmitr', component: IFrameEmitterComponent },
 ];
+
 
 @NgModule({
   bootstrap: [ AppComponent ],
@@ -24,6 +28,8 @@ const routes: Routes = [
     BrowserAnimationsModule,
     AppMaterialModule,
     FormsModule,
+    FsMessageModule.forRoot(),
+    ToastrModule.forRoot(),
     FsExampleModule.forRoot({ iframeObserveBody: false }),
     RouterModule.forRoot(routes),
   ],

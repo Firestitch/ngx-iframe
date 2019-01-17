@@ -1,6 +1,7 @@
 import { Directive, Renderer2, ElementRef, HostListener, OnInit } from '@angular/core';
 import { parseEvent } from '../../functions/parse-event';
 
+
 @Directive({
   selector: '[fsIFrame]'
 })
@@ -19,7 +20,7 @@ export class FsIFrameDirective implements OnInit {
 
     if (data.name === 'height') {
 
-        let height = data.value;
+        const height = data.value;
         this.renderer.setStyle(this.elementRef.nativeElement, 'height', height + 'px');
 
     } else if (data.name === 'scrollto') {

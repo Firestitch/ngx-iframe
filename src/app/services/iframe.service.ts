@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
-import { Subscription } from 'rxjs/Subscription';
+import { interval, Subscription } from 'rxjs';
+
 import { postMessage } from '../functions/post-message';
+
 
 @Injectable()
 export class FsIFrame {
@@ -9,7 +10,7 @@ export class FsIFrame {
   private height;
 
   observeBody(): Subscription {
-    return IntervalObservable.create(100)
+    return interval(100)
     .subscribe(() => {
       const height = window.document.body.offsetHeight;
 

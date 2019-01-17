@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FsIFrame } from '../../../../src';
+import { FsIFrame } from '@firestitch/iframe';
 
 @Component({
   templateUrl: 'ifame-emitter.component.html'

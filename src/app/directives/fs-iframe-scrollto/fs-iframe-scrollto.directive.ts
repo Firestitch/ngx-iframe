@@ -1,6 +1,6 @@
 import { Directive, ElementRef, HostListener, OnInit, Renderer2 } from '@angular/core';
-import { isString } from 'lodash';
 import { postMessage } from '../../functions/post-message';
+
 
 @Directive({
   selector: '[fsIFrameScrollTo]'

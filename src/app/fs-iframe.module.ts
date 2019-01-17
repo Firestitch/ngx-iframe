@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { FsIFrameScrollToDirective } from './directives/fs-iframe-scrollto/fs-iframe-scrollto.directive';
 import { FsIFrameDirective } from './directives/fs-iframe/fs-iframe.directive';
-import { FsIFrame } from './services';
+import { FsIFrame } from './services/iframe.service';
 
 
 @NgModule({
