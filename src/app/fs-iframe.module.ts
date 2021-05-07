@@ -22,7 +22,7 @@ import { FsIFrame } from './services/iframe.service';
   ],
 })
 export class FsIFrameModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders<FsIFrameModule> {
     return {
       ngModule: FsIFrameModule,
       providers: [FsIFrame]
