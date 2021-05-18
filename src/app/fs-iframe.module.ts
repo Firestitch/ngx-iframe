@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FsIFrameScrollToDirective } from './directives/fs-iframe-scrollto/fs-iframe-scrollto.directive';
 import { FsIFrameDirective } from './directives/fs-iframe/fs-iframe.directive';
 import { FsIFrame } from './services/iframe.service';
-import { FsIFrameComponent } from './../app/components/iframe';
+import { FsIFrameComponent } from './../app/components/iframe/iframe.component';
 
 
 @NgModule({

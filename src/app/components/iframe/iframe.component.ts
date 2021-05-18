@@ -1,8 +1,7 @@
-import { Component, OnInit, ElementRef, AfterViewInit, OnDestroy, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, AfterViewInit, OnDestroy, Input, ViewChild } from '@angular/core';
 
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { Subject, fromEvent } from 'rxjs';
-import { DomSanitizer } from '@angular/platform-browser';
 
 
 @Component({
@@ -10,7 +9,7 @@ import { DomSanitizer } from '@angular/platform-browser';
   templateUrl: './iframe.component.html',
   styleUrls: ['./iframe.component.scss'],
 })
-export class FsIFrameComponent implements OnInit, AfterViewInit, OnInit, OnDestroy {
+export class FsIFrameComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild('frame')
   public frame: ElementRef;
@@ -20,7 +19,15 @@ export class FsIFrameComponent implements OnInit, AfterViewInit, OnInit, OnDestr
 
   private _destroy$ = new Subject();
 
-  public ngOnInit(): void {
+  public onload(): void {
+    this.updateHeight();
+  }
+
+  public get frameEl() {
+    return this.frame?.nativeElement;
+  }
+
+  public ngAfterViewInit(): void {
     fromEvent(window, 'resize')
       .pipe(
         debounceTime(50),
@@ -29,23 +36,13 @@ export class FsIFrameComponent implements OnInit, AfterViewInit, OnInit, OnDestr
       .subscribe(() => {
         this.updateHeight();
       });
-  }
 
-  public onload() {
-    this.updateHeight();
-  }
-
-  public get frameEl() {
-    return this.frame.nativeElement;
-  }
-
-  public ngAfterViewInit() {
     if (this.html) {
       this._updateBodyFrames();
     }
   }
 
-  private _updateBodyFrames() {
+  private _updateBodyFrames(): void {
     const win: Window = this.frameEl.contentWindow;
     const doc: Document = win.document;
     const data = `
@@ -76,14 +73,16 @@ export class FsIFrameComponent implements OnInit, AfterViewInit, OnInit, OnDestr
   }
 
 
-  public ngOnDestroy() {
+  public ngOnDestroy(): void {
     this._destroy$.next();
     this._destroy$.complete();
   }
 
-  public updateHeight() {
-    this.frameEl.removeAttribute('height');
-    this.frameEl.setAttribute('height', this.frameEl.contentDocument.body.scrollHeight);
+  public updateHeight(): void {
+    if (this.frameEl) {
+      this.frameEl.removeAttribute('height');
+      this.frameEl.setAttribute('height', this.frameEl.contentDocument.body.scrollHeight);
+    }
   }
 
 }
