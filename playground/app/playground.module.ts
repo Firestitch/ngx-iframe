@@ -31,7 +31,7 @@ const routes: Routes = [
     FsMessageModule.forRoot(),
     ToastrModule.forRoot(),
     FsExampleModule.forRoot({ iframeObserveBody: false }),
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' }),
   ],
   entryComponents: [
   ],
