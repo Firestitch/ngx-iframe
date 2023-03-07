@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
-import { FsIFrame } from 'iframe-package';
+import { FsIFrame } from '@firestitch/iframe';
+
 
 @Component({
-  templateUrl: 'ifame-emitter.component.html'
+  templateUrl: './ifame-emitter.component.html'
 })
 export class IFrameEmitterComponent {
   public items = [];
 
-  constructor(private fsIFrame: FsIFrame) {
-    this.fsIFrame.observeBody();
+  constructor(private _fsIFrame: FsIFrame) {
+    this._fsIFrame.observeBody();
   }
 
   add() {

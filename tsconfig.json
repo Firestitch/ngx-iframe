@@ -1,8 +1,8 @@
 {
-  "extends": "./tools/config/tsconfig.cli.json",
+  "extends": "./node_modules/@firestitch/component-tools/config/tsconfig.cli.json",
   "compilerOptions": {
     "paths": {
-      "iframe-package": [
+      "@firestitch/api": [
         "src/public_api.ts"
       ]
     }
