@@ -15,6 +15,7 @@ export class FsIFrameComponent implements AfterViewInit, OnDestroy {
   public frame: ElementRef;
 
   @Input() public html;
+  @Input() public src;
   @Input() public styles;
 
   private _destroy$ = new Subject();
