@@ -1,7 +1,8 @@
-import { Component, ElementRef, AfterViewInit, OnDestroy, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, AfterViewInit, OnDestroy, Input, ViewChild, OnInit } from '@angular/core';
 
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { Subject, fromEvent } from 'rxjs';
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 @Component({
@@ -9,15 +10,31 @@ import { Subject, fromEvent } from 'rxjs';
   templateUrl: './iframe.component.html',
   styleUrls: ['./iframe.component.scss'],
 })
-export class FsIFrameComponent implements AfterViewInit, OnDestroy {
+export class FsIFrameComponent implements AfterViewInit, OnDestroy, OnInit {
 
   @ViewChild('frame')
   public frame: ElementRef;
 
   @Input() public html;
+  @Input() public src;
+  @Input() public image;
   @Input() public styles;
 
   private _destroy$ = new Subject();
+
+  public constructor(
+    private _domSaniizer: DomSanitizer,
+  ) {}
+
+  public ngOnInit(): void {
+    if(this.image) {
+      this.html = `<img src="${this.image}">`;
+    }
+
+    if(this.src) {
+      this.src = this._domSaniizer.bypassSecurityTrustResourceUrl(this.src);
+    }
+  }
 
   public onload(): void {
     this.updateHeight();
@@ -71,7 +88,6 @@ export class FsIFrameComponent implements AfterViewInit, OnDestroy {
     doc.write(data);
     doc.close();
   }
-
 
   public ngOnDestroy(): void {
     this._destroy$.next();
