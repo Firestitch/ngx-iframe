@@ -1,4 +1,7 @@
 iframe {
-  width: 100%;
   border: none;
+
+  &.iframe-src { 
+    width: 100%;
+  }
 }

@@ -17,7 +17,6 @@ export class FsIFrameComponent implements AfterViewInit, OnDestroy, OnInit {
 
   @Input() public html;
   @Input() public src;
-  @Input() public image;
   @Input() public styles;
 
   private _destroy$ = new Subject();
@@ -27,12 +26,13 @@ export class FsIFrameComponent implements AfterViewInit, OnDestroy, OnInit {
   ) {}
 
   public ngOnInit(): void {
-    if(this.image) {
-      this.html = `<img src="${this.image}">`;
-    }
-
     if(this.src) {
-      this.src = this._domSaniizer.bypassSecurityTrustResourceUrl(this.src);
+      if(this.src?.match(/data:image/) || this.src?.match(/\.(jpe?g|png)/)) {
+        this.html = `<img src="${this.src}">`;
+        this.src = null;
+      } else {
+        this.src = this._domSaniizer.bypassSecurityTrustResourceUrl(this.src);
+      }
     }
   }
 
@@ -95,9 +95,11 @@ export class FsIFrameComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   public updateHeight(): void {
-    if (this.frameEl) {
+    if (this.frameEl?.contentDocument?.body) {
       this.frameEl.removeAttribute('height');
+      this.frameEl.removeAttribute('width');
       this.frameEl.setAttribute('height', this.frameEl.contentDocument.body.scrollHeight);
+      this.frameEl.setAttribute('width', this.frameEl.contentDocument.body.scrollWidth);
     }
   }
 
