@@ -18,6 +18,8 @@ export class FsIFrameComponent implements AfterViewInit, OnDestroy, OnInit {
   @Input() public html;
   @Input() public src;
   @Input() public styles;
+  @Input() public width;
+  @Input() public height;
 
   private _destroy$ = new Subject();
 
@@ -96,10 +98,19 @@ export class FsIFrameComponent implements AfterViewInit, OnDestroy, OnInit {
 
   public updateHeight(): void {
     if (this.frameEl?.contentDocument?.body) {
-      this.frameEl.removeAttribute('height');
-      this.frameEl.removeAttribute('width');
-      this.frameEl.setAttribute('height', this.frameEl.contentDocument.body.scrollHeight);
-      this.frameEl.setAttribute('width', this.frameEl.contentDocument.body.scrollWidth);
+      if(this.height) {
+        this.frameEl.setAttribute('height', this.height);
+      } else {
+        this.frameEl.removeAttribute('height');
+        this.frameEl.setAttribute('height', this.frameEl.contentDocument.body.scrollHeight);
+      }
+
+      if(this.width) {
+        this.frameEl.setAttribute('width', this.width);
+      } else {
+        this.frameEl.removeAttribute('width');
+        this.frameEl.setAttribute('width', this.frameEl.contentDocument.body.scrollWidth);
+      }
     }
   }
 
