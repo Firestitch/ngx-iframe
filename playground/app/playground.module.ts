@@ -8,8 +8,6 @@ import { FsIFrameModule } from '../../src/app/fs-iframe.module';
 import { FsExampleModule } from '@firestitch/example';
 import { FsMessageModule } from '@firestitch/message';
 
-import { ToastrModule } from 'ngx-toastr';
-
 import { AppMaterialModule } from './material.module';
 import { FirstExampleComponent, IFrameEmitterComponent, ExamplesComponent } from './components';
 import { AppComponent } from './app.component';
@@ -29,7 +27,6 @@ const routes: Routes = [
     AppMaterialModule,
     FormsModule,
     FsMessageModule.forRoot(),
-    ToastrModule.forRoot(),
     FsExampleModule.forRoot({ iframeObserveBody: false }),
     RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' }),
   ],
