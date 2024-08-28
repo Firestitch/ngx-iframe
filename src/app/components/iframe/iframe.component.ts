@@ -1,14 +1,15 @@
-import { Component, ElementRef, AfterViewInit, OnDestroy, Input, ViewChild, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
-import { debounceTime, takeUntil } from 'rxjs/operators';
-import { Subject, fromEvent } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Subject, fromEvent } from 'rxjs';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 
 
 @Component({
   selector: 'fs-iframe',
   templateUrl: './iframe.component.html',
   styleUrls: ['./iframe.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FsIFrameComponent implements AfterViewInit, OnDestroy, OnInit {
 
