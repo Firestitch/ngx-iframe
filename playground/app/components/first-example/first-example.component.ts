@@ -1,12 +1,14 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 
 @Component({
   selector: 'first-example',
   templateUrl: './first-example.component.html',
-  styleUrls: ['./first-example.component.css']
+  styleUrls: ['./first-example.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FirstExampleComponent {
+
 
   public html;
   public styles;
@@ -14,6 +16,10 @@ export class FirstExampleComponent {
   public constructor() {
     this.html = this._getHtml();
     this.styles = this._getStyles();
+  }
+
+  public loaded(el) {
+    console.log('loaded', el);
   }
 
   private _getHtml(): string {

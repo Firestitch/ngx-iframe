@@ -1,9 +1,8 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 
 import { DomSanitizer } from '@angular/platform-browser';
-import { Subject, fromEvent } from 'rxjs';
+import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
-
 
 @Component({
   selector: 'fs-iframe',
@@ -22,10 +21,15 @@ export class FsIFrameComponent implements AfterViewInit, OnDestroy, OnInit {
   @Input() public width;
   @Input() public height;
 
+  @Output() public loaded = new EventEmitter<HTMLIFrameElement>();
+
   private _destroy$ = new Subject();
+  private _resize$ = new Subject();
+  private _resizeObserver: ResizeObserver;
 
   public constructor(
     private _domSaniizer: DomSanitizer,
+    private _el: ElementRef
   ) {}
 
   public ngOnInit(): void {
@@ -40,22 +44,29 @@ export class FsIFrameComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   public onload(): void {
+    this.loaded.emit(this.iframe);
     this.updateHeight();
   }
 
-  public get frameEl() {
+  public get iframe(): HTMLIFrameElement {
     return this.frame?.nativeElement;
   }
 
   public ngAfterViewInit(): void {
-    fromEvent(window, 'resize')
+    this._resizeObserver = new ResizeObserver(() => {
+      this._resize$.next();
+    });
+    
+    this._resize$
       .pipe(
-        debounceTime(50),
-        takeUntil(this._destroy$)
+        debounceTime(100),
+        takeUntil(this._destroy$),
       )
       .subscribe(() => {
         this.updateHeight();
       });
+
+    this._resizeObserver.observe(this._el.nativeElement);
 
     if (this.html) {
       this._updateBodyFrames();
@@ -63,7 +74,7 @@ export class FsIFrameComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   private _updateBodyFrames(): void {
-    const win: Window = this.frameEl.contentWindow;
+    const win: Window = this.iframe.contentWindow;
     const doc: Document = win.document;
     const data = `
     <style>
@@ -92,27 +103,29 @@ export class FsIFrameComponent implements AfterViewInit, OnDestroy, OnInit {
     doc.close();
   }
 
+  public updateHeight(): void {
+    if (this.iframe?.contentDocument?.body) {
+      if(this.height) {
+        this.iframe.setAttribute('height', this.height);
+      } else {
+        this.iframe.removeAttribute('height');
+        this.iframe.setAttribute('height', this.iframe.contentDocument.body.scrollHeight.toString());
+      }
+
+      if(this.width) {
+        this.iframe.setAttribute('width', this.width);
+      } else {
+        this.iframe.removeAttribute('width');
+        this.iframe.setAttribute('width', this.iframe.contentDocument.body.scrollWidth.toString());
+      }
+    }
+  }
+
   public ngOnDestroy(): void {
+    this._resizeObserver.disconnect();
     this._destroy$.next();
     this._destroy$.complete();
   }
 
-  public updateHeight(): void {
-    if (this.frameEl?.contentDocument?.body) {
-      if(this.height) {
-        this.frameEl.setAttribute('height', this.height);
-      } else {
-        this.frameEl.removeAttribute('height');
-        this.frameEl.setAttribute('height', this.frameEl.contentDocument.body.scrollHeight);
-      }
-
-      if(this.width) {
-        this.frameEl.setAttribute('width', this.width);
-      } else {
-        this.frameEl.removeAttribute('width');
-        this.frameEl.setAttribute('width', this.frameEl.contentDocument.body.scrollWidth);
-      }
-    }
-  }
 
 }

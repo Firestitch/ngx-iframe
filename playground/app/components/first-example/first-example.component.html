@@ -1,11 +1,14 @@
-<!-- <fs-iframe
-  [html]="html"
-  [styles]="styles">
-</fs-iframe>
- -->
-<fs-iframe
-  [src]="'https://www.molsoncoors.com/sites/molsonco/files/How%20to%20Read%20Code%20Dates_vFinal%20%281%29_0.pdf'">
-</fs-iframe> 
-<fs-iframe
-  [src]="'https://robbreport.com/wp-content/uploads/2020/07/6-3.jpg?w=1000'">
-</fs-iframe>
+
+<div class="row">
+  <fs-iframe
+    [src]="'https://www.molsoncoors.com/sites/molsonco/files/How%20to%20Read%20Code%20Dates_vFinal%20%281%29_0.pdf'">
+  </fs-iframe> 
+  <fs-iframe
+    [src]="'https://robbreport.com/wp-content/uploads/2020/07/6-3.jpg?w=1000'">
+  </fs-iframe>
+  <fs-iframe
+    [html]="html"
+    [styles]="styles"
+    (loaded)="loaded($event)">
+  </fs-iframe>
+</div>
