@@ -28,7 +28,7 @@ const routes: Routes = [
         FormsModule,
         FsMessageModule.forRoot(),
         FsExampleModule.forRoot({ iframeObserveBody: false }),
-        RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' }),
+        RouterModule.forRoot(routes, {}),
     ],
     declarations: [
         AppComponent,
