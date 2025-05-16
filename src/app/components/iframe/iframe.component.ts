@@ -65,7 +65,7 @@ export class FsIFrameComponent implements AfterViewInit, OnDestroy, OnInit, OnCh
 
   public ngAfterViewInit(): void {
     this._resizeObserver = new ResizeObserver(() => {
-      this._resize$.next();
+      this._resize$.next(null);
     });
     
     this._resize$
@@ -134,7 +134,7 @@ export class FsIFrameComponent implements AfterViewInit, OnDestroy, OnInit, OnCh
 
   public ngOnDestroy(): void {
     this._resizeObserver.disconnect();
-    this._destroy$.next();
+    this._destroy$.next(null);
     this._destroy$.complete();
   }
 
