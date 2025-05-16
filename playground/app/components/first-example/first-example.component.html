@@ -1,14 +1,17 @@
 
-<div class="row">
+  <h2>PDF</h2>
   <fs-iframe
     [src]="'https://www.molsoncoors.com/sites/molsonco/files/How%20to%20Read%20Code%20Dates_vFinal%20%281%29_0.pdf'">
   </fs-iframe> 
+  <h2>Image</h2>
   <fs-iframe
     [src]="'https://robbreport.com/wp-content/uploads/2020/07/6-3.jpg?w=1000'">
   </fs-iframe>
+  <h2>HTML</h2>
   <fs-iframe
     [html]="html"
     [styles]="styles"
     (loaded)="loaded($event)">
   </fs-iframe>
-</div>
+
+  <button (click)="changeHtml()">Change HTML</button>

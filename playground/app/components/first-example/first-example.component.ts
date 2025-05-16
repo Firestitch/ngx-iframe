@@ -5,21 +5,24 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   selector: 'first-example',
   templateUrl: './first-example.component.html',
   styleUrls: ['./first-example.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FirstExampleComponent {
-
 
   public html;
   public styles;
 
-  public constructor() {
+  constructor() {
     this.html = this._getHtml();
     this.styles = this._getStyles();
   }
 
   public loaded(el) {
     console.log('loaded', el);
+  }
+
+  public changeHtml(): void {
+    this.html = 'New HTML';
   }
 
   private _getHtml(): string {

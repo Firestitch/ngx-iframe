@@ -1,6 +1,9 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-
+import {
+  AfterViewInit, ChangeDetectionStrategy, Component, ElementRef,
+  EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild,
+} from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 
@@ -10,7 +13,7 @@ import { debounceTime, takeUntil } from 'rxjs/operators';
   styleUrls: ['./iframe.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FsIFrameComponent implements AfterViewInit, OnDestroy, OnInit {
+export class FsIFrameComponent implements AfterViewInit, OnDestroy, OnInit, OnChanges {
 
   @ViewChild('frame')
   public frame: ElementRef;
@@ -27,10 +30,18 @@ export class FsIFrameComponent implements AfterViewInit, OnDestroy, OnInit {
   private _resize$ = new Subject();
   private _resizeObserver: ResizeObserver;
 
-  public constructor(
+  constructor(
     private _domSaniizer: DomSanitizer,
-    private _el: ElementRef
+    private _el: ElementRef,
   ) {}
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if(changes.html && !changes.html.firstChange) {
+      this.iframe.contentWindow.document.open();
+      this.iframe.contentWindow.document.write(this.html);
+      this.iframe.contentWindow.document.close();
+    }
+  }
 
   public ngOnInit(): void {
     if(this.src) {
