@@ -2,7 +2,7 @@ import {
   AfterViewInit, ChangeDetectionStrategy, Component, ElementRef,
   EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild,
 } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
@@ -37,21 +37,25 @@ export class FsIFrameComponent implements AfterViewInit, OnDestroy, OnInit, OnCh
 
   public ngOnChanges(changes: SimpleChanges): void {
     if(changes.html && !changes.html.firstChange) {
-      this.iframe.contentWindow.document.open();
-      this.iframe.contentWindow.document.write(this.html);
-      this.iframe.contentWindow.document.close();
+      this.src = this.createHtmlBlob(this.html);
     }
   }
 
   public ngOnInit(): void {
     if(this.src) {
-      if(this.src?.match(/data:image/) || this.src?.match(/\.(jpe?g|png)/)) {
-        this.html = `<img src="${this.src}">`;
-        this.src = null;
-      } else {
-        this.src = this._domSaniizer.bypassSecurityTrustResourceUrl(this.src);
-      }
+      this.src = this.src?.match(/data:image/) || this.src?.match(/\.(jpe?g|png)/) ? 
+        this.createHtmlBlob(`<img src="${this.src}">`) : 
+        this._domSaniizer.bypassSecurityTrustResourceUrl(this.src);
+    } else if(this.html) {
+      this.src = this.createHtmlBlob(this.html);
     }
+  }
+
+  public createHtmlBlob(html): SafeResourceUrl {
+    const blob = new Blob([this._getDefaultStyles() + html], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+
+    return this._domSaniizer.bypassSecurityTrustResourceUrl(url);
   }
 
   public onload(): void {
@@ -78,40 +82,6 @@ export class FsIFrameComponent implements AfterViewInit, OnDestroy, OnInit, OnCh
       });
 
     this._resizeObserver.observe(this._el.nativeElement);
-
-    if (this.html) {
-      this._updateBodyFrames();
-    }
-  }
-
-  private _updateBodyFrames(): void {
-    const win: Window = this.iframe.contentWindow;
-    const doc: Document = win.document;
-    const data = `
-    <style>
-      body {
-        font-family: Roboto;
-        font-size: 15px;
-        margin: 0 !important;
-        overflow-y: hidden !important;
-        width: auto !important;
-      }
-
-      a {
-        color: #1155CC;
-      }
-
-      * {
-        box-sizing: border-box !important;
-      }
-
-      ${this.styles}
-    </style>
-    ${this.html}`;
-
-    doc.open();
-    doc.write(data);
-    doc.close();
   }
 
   public updateHeight(): void {
@@ -136,6 +106,30 @@ export class FsIFrameComponent implements AfterViewInit, OnDestroy, OnInit, OnCh
     this._resizeObserver.disconnect();
     this._destroy$.next(null);
     this._destroy$.complete();
+  }
+
+  private _getDefaultStyles(): string {
+    return `
+    <style>
+      body {
+        font-family: Roboto;
+        font-size: 15px;
+        margin: 0;
+        overflow-y: hidden;
+        width: auto;
+      }
+
+      a {
+        color: #1155CC;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      ${this.styles}
+    </style>
+    `;
   }
 
 

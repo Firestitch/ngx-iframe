@@ -1,16 +1,8 @@
-<ng-container *ngIf="src">
-  <iframe 
+@if (src) {
+  <iframe
     class="iframe-src"
-    #frame 
-    [src]="src" 
+    #frame
+    [src]="src"
     (load)="onload()">
   </iframe>
-</ng-container>
-
-<ng-container *ngIf="html">
-  <iframe 
-    class="iframe-html"
-    #frame 
-    (load)="onload()">
-  </iframe>
-</ng-container>
+}
