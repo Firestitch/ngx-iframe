@@ -1,12 +1,5 @@
 iframe {
   border: 0;
   width: 100%;
-
-  &.iframe-src { 
-    width: 100%;
-  }
-}
-
-:host {
   display: block;
 }
