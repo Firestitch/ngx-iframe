@@ -8,10 +8,11 @@ import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 
 @Component({
-  selector: 'fs-iframe',
-  templateUrl: './iframe.component.html',
-  styleUrls: ['./iframe.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'fs-iframe',
+    templateUrl: './iframe.component.html',
+    styleUrls: ['./iframe.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
 })
 export class FsIFrameComponent implements AfterViewInit, OnDestroy, OnInit, OnChanges {
 

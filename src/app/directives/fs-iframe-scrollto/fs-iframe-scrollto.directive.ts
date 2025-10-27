@@ -3,7 +3,8 @@ import { postMessage } from '../../functions/post-message';
 
 
 @Directive({
-  selector: '[fsIFrameScrollTo]'
+    selector: '[fsIFrameScrollTo]',
+    standalone: true
 })
 export class FsIFrameScrollToDirective implements OnInit {
 

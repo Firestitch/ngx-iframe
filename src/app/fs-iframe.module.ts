@@ -8,19 +8,17 @@ import { FsIFrameComponent } from './../app/components/iframe/iframe.component';
 
 
 @NgModule({
-  imports: [
-    CommonModule,
-  ],
-  exports: [
-    FsIFrameScrollToDirective,
-    FsIFrameDirective,
-    FsIFrameComponent,
-  ],
-  declarations: [
-    FsIFrameScrollToDirective,
-    FsIFrameDirective,
-    FsIFrameComponent,
-  ],
+    imports: [
+        CommonModule,
+        FsIFrameScrollToDirective,
+        FsIFrameDirective,
+        FsIFrameComponent,
+    ],
+    exports: [
+        FsIFrameScrollToDirective,
+        FsIFrameDirective,
+        FsIFrameComponent,
+    ],
 })
 export class FsIFrameModule {
   static forRoot(): ModuleWithProviders<FsIFrameModule> {

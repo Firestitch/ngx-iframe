@@ -4,7 +4,8 @@ import { parseEvent } from '../../functions/parse-event';
 
 
 @Directive({
-  selector: '[fsIFrame]'
+    selector: '[fsIFrame]',
+    standalone: true
 })
 export class FsIFrameDirective implements OnInit {
 

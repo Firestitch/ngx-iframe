@@ -1,11 +1,14 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { FsIFrameComponent } from '../../../../src/app/components/iframe/iframe.component';
 
 
 @Component({
-  selector: 'first-example',
-  templateUrl: './first-example.component.html',
-  styleUrls: ['./first-example.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'first-example',
+    templateUrl: './first-example.component.html',
+    styleUrls: ['./first-example.component.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [FsIFrameComponent],
 })
 export class FirstExampleComponent {
 
