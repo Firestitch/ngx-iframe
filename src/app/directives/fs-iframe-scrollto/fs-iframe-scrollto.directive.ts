@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener, OnInit, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, HostListener, OnInit, Renderer2, inject } from '@angular/core';
 import { postMessage } from '../../functions/post-message';
 
 
@@ -7,8 +7,9 @@ import { postMessage } from '../../functions/post-message';
     standalone: true
 })
 export class FsIFrameScrollToDirective implements OnInit {
+  private elementRef = inject(ElementRef);
+  private renderer = inject(Renderer2);
 
-  constructor(private elementRef: ElementRef, private renderer: Renderer2) {}
 
   ngOnInit() {
     this.renderer.addClass(this.elementRef.nativeElement, 'fs-iframe-scrollto');

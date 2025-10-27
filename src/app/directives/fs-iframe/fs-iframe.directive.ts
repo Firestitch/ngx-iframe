@@ -1,4 +1,4 @@
-import { Directive, Renderer2, ElementRef, HostListener, OnInit } from '@angular/core';
+import { Directive, Renderer2, ElementRef, HostListener, OnInit, inject } from '@angular/core';
 
 import { parseEvent } from '../../functions/parse-event';
 
@@ -8,9 +8,11 @@ import { parseEvent } from '../../functions/parse-event';
     standalone: true
 })
 export class FsIFrameDirective implements OnInit {
+  private elementRef = inject(ElementRef);
+  private renderer = inject(Renderer2);
+
 
   private offset = 0;
-  constructor(private elementRef: ElementRef, private renderer: Renderer2) {}
 
   ngOnInit() {
     this.renderer.addClass(this.elementRef.nativeElement, 'fs-iframe');

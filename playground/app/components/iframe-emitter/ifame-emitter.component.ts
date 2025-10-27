@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FsIFrame } from '@firestitch/iframe';
 import { MatButton } from '@angular/material/button';
 import { FsIFrameScrollToDirective } from '../../../../src/app/directives/fs-iframe-scrollto/fs-iframe-scrollto.directive';
@@ -10,9 +10,11 @@ import { FsIFrameScrollToDirective } from '../../../../src/app/directives/fs-ifr
     imports: [MatButton, FsIFrameScrollToDirective]
 })
 export class IFrameEmitterComponent {
+  private _fsIFrame = inject(FsIFrame);
+
   public items = [];
 
-  constructor(private _fsIFrame: FsIFrame) {
+  constructor() {
     this._fsIFrame.observeBody();
   }
 

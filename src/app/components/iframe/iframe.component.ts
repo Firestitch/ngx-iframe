@@ -1,7 +1,4 @@
-import {
-  AfterViewInit, ChangeDetectionStrategy, Component, ElementRef,
-  EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild,
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 import { Subject } from 'rxjs';
@@ -15,6 +12,9 @@ import { debounceTime, takeUntil } from 'rxjs/operators';
     standalone: true,
 })
 export class FsIFrameComponent implements AfterViewInit, OnDestroy, OnInit, OnChanges {
+  private _domSaniizer = inject(DomSanitizer);
+  private _el = inject(ElementRef);
+
 
   @ViewChild('frame')
   public frame: ElementRef;
@@ -30,11 +30,6 @@ export class FsIFrameComponent implements AfterViewInit, OnDestroy, OnInit, OnCh
   private _destroy$ = new Subject();
   private _resize$ = new Subject();
   private _resizeObserver: ResizeObserver;
-
-  constructor(
-    private _domSaniizer: DomSanitizer,
-    private _el: ElementRef,
-  ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if(changes.html && !changes.html.firstChange) {
