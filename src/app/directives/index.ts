@@ -1,1 +1,2 @@
-export * from './fs-iframe-emitter';
+export * from './fs-iframe';
+export * from './fs-iframe-scrollto';

@@ -1,14 +1,15 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+
 import { FsIFrameComponent } from '../../../../src/app/components/iframe/iframe.component';
 
 
 @Component({
-    selector: 'first-example',
-    templateUrl: './first-example.component.html',
-    styleUrls: ['./first-example.component.css'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [FsIFrameComponent],
+  selector: 'first-example',
+  templateUrl: './first-example.component.html',
+  styleUrls: ['./first-example.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [FsIFrameComponent],
 })
 export class FirstExampleComponent {
 
@@ -41,7 +42,8 @@ export class FirstExampleComponent {
     <div class="fakeimg" style="height:200px;">Image</div>
     <p>Some text..</p>
     <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
-  </div>`;
+  </div>
+  <script>alert('hello')</script>`;
   }
 
   private _getStyles(): string {

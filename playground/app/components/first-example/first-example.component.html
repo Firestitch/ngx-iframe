@@ -12,6 +12,7 @@
 <fs-iframe
   [html]="html"
   [styles]="styles"
+  [scripts]="false"
   (loaded)="loaded($event)">
 </fs-iframe>
 <button (click)="changeHtml()">

@@ -1,37 +1,47 @@
-import { Directive, Renderer2, ElementRef, HostListener, OnInit, inject } from '@angular/core';
+import { Directive, ElementRef, HostListener, OnInit, Renderer2, inject } from '@angular/core';
 
 import { parseEvent } from '../../functions/parse-event';
 
 
 @Directive({
-    selector: '[fsIFrame]',
-    standalone: true
+  selector: '[fsIFrame]',
+  standalone: true,
 })
 export class FsIFrameDirective implements OnInit {
-  private elementRef = inject(ElementRef);
-  private renderer = inject(Renderer2);
 
+  private _elementRef = inject(ElementRef);
+  private _renderer = inject(Renderer2);
+  private _offset = 0;
 
-  private offset = 0;
-
-  ngOnInit() {
-    this.renderer.addClass(this.elementRef.nativeElement, 'fs-iframe');
+  public ngOnInit() {
+    this._renderer.addClass(this._elementRef.nativeElement, 'fs-iframe');
   }
 
   @HostListener('window:message', ['$event'])
-  onMessage(event) {
+  public onMessage(event) {
     const data = parseEvent(event);
 
-    if (data.name === 'height') {
+    switch (data.name) {
+      case 'height': {
 
         const height = data.value;
-        this.renderer.setStyle(this.elementRef.nativeElement, 'height', height + 'px');
+        this._renderer.setStyle(this._elementRef.nativeElement, 'height', `${height  }px`);
 
-    } else if (data.name === 'scrollto') {
-      window.document.documentElement.scrollTop = data.value + this.offset;
+    
+        break;
+      }
+      case 'scrollto': {
+        window.document.documentElement.scrollTop = data.value + this._offset;
 
-    } else if (data.name === 'offset') {
-      this.offset = data.value;
+    
+        break;
+      }
+      case 'offset': {
+        this._offset = data.value;
+    
+        break;
+      }
+    // No default
     }
   }
 }
