@@ -1,5 +1,9 @@
-:host ::ng-deep iframe {
-  border: 0;
-  width: 100%;
+:host {
   display: block;
+
+  ::ng-deep iframe {
+    border: 0;
+    width: 100%;
+    display: block;
+  }
 }

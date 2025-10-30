@@ -1,6 +1,6 @@
 import {
   AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter,
-  Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild,
+  Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild, inject,
 } from '@angular/core';
 
 import { Subject } from 'rxjs';
@@ -33,6 +33,7 @@ export class FsIFrameComponent implements AfterViewInit, OnDestroy, OnInit, OnCh
   private _destroy$ = new Subject();
   private _resize$ = new Subject();
   private _resizeObserver: ResizeObserver;
+  private _el = inject(ElementRef);
 
   public ngOnChanges(changes: SimpleChanges): void {
     if(changes.html && !changes.html.firstChange) {
@@ -78,9 +79,7 @@ export class FsIFrameComponent implements AfterViewInit, OnDestroy, OnInit, OnCh
       this.onload();
     };
       
-    // Append to a container (e.g., body or a specific div)
-    this.container.nativeElement.appendChild(iframe);
-
+    this._el.nativeElement.appendChild(iframe);
     this._iframe = iframe;
   }
 
@@ -131,7 +130,7 @@ export class FsIFrameComponent implements AfterViewInit, OnDestroy, OnInit, OnCh
         this.updateHeight();
       });
 
-    this._resizeObserver.observe(this.container.nativeElement);
+    this._resizeObserver.observe(this._el.nativeElement);
   }
 
   public updateHeight(): void {
